@@ -1,0 +1,37 @@
+import random
+
+class BinarnyStrom:
+
+    #------ vnorená trieda ------
+
+    class Vrchol:
+        def __init__(self, data, left=None, right=None):
+            self.data, self.left, self.right = data, left, right
+
+    #------ koniec definície vnorenej triedy ------
+
+    def __init__(self, postupnost=None):
+        self.root = None
+        if postupnost is not None:
+            for hodnota in postupnost:
+                self.pridaj_vrchol(hodnota)
+
+    def pridaj_vrchol(self, hodnota):
+        if self.root is None:
+            self.root = self.Vrchol(hodnota)
+        else:
+            vrch = self.root
+            while True:
+                if random.randrange(2):
+                    if vrch.left is None:
+                        vrch.left = self.Vrchol(hodnota)
+                        return
+                    vrch = vrch.left
+                else:
+                    if vrch.right is None:
+                        vrch.right = self.Vrchol(hodnota)
+                        return
+                    vrch = vrch.right
+
+
+s1 = BinarnyStrom('Python')
