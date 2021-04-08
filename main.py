@@ -13,6 +13,8 @@ class BinaryTree:
             self.data = data
             self.left = left
             self.right = right
+        def __repr__(self):
+            return f'(Node data : {self.data!r}, Left child : {self.left}, Right child :{self.right})'
         
     def __init__(self, iterator = None, ord= None): 
         self.root = None
@@ -21,6 +23,16 @@ class BinaryTree:
         if iterator is not None:
            for _i in iterator:
                self.add_node(_i, ord)
+    
+    def __len__(self):
+        def len_r(_node):
+            if _node == None:
+                return 0
+            return 1 + len_r(_node.left) + len_r(_node.right)
+        
+        return len_r(self.root)
+    
+    
     
     def add_node(self,data, ord = None): #not implemented  ord = None - random, True = left first, False = right first
         if self.root is None:
@@ -42,7 +54,7 @@ class BinaryTree:
                             _node.right = self.Node(data)
                             return
                         _node = _node.right
-            if ord:
+        """if ord:
                 while True:
                     if _node.left is None:
                         _node.left = self.Node(data)
@@ -51,7 +63,8 @@ class BinaryTree:
                         _node.right = self.Node(data)
                         return
                     else:
-                        _node = _node.left        
+                        _node = _node.left    
+                        """    
         
 
 
@@ -60,22 +73,26 @@ class BinaryTree:
     def visualize(self):
         
         def visualize_r(node,level=0):
-            print (' '*level, node.data)
-                    
+            _nodestr = '  '*level+'+-'     
                     
             if node.left is not None:
                 visualize_r(node.left, level+len(str(node.left.data)))
+            
                 
+            
+            print (f'{_nodestr}{node.data}')    
+            
             if node.right is not None:
                 visualize_r(node.right,level+len(str(node.right.data)))
             else:
+               
                 return
         
         visualize_r(self.root,0)
           
         
         
-    """does not work
+   
     def sum_tree(self):
         def sum_tree_r(_node):
             if _node == None:
@@ -83,14 +100,8 @@ class BinaryTree:
             return _node.data + sum_tree_r(_node.left) + sum_tree_r(_node.right)
 
         return sum_tree_r(self.root)
-    """
-
     
-    
-    
-    
-
-        
+      
 
 
 def draw_Tree(node, width, x, y):
@@ -104,7 +115,7 @@ def draw_Tree(node, width, x, y):
 a = BinaryTree(x for x in range(10))
 a.visualize()
 
-b = BinaryTree([x for x in range(10)],ord=True)
-b.visualize()
-b.sum_tree()
+
+print('sum of tree : ',a.sum_tree())
+print('lenth of tree: ',len(a))
 
